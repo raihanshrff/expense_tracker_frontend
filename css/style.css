@@ -16,7 +16,7 @@ body{
 .container{
     background-color: white;
     padding: 20px;
-    width: 350px;
+    width: 500px;
     box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
     border-radius: 10px;
 }
@@ -55,4 +55,34 @@ p{
 a{
     color:#4CAF50;
     text-decoration: none;
+}
+/* summary cards */
+.summary-card{
+    background-color: #f9f9f9;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    text-align: center;
+}
+.summary-card h3{
+    margin-bottom: 10px;
+}
+/* transactionstable */
+table{
+    font-size:14px;
+    width: 100%;
+    border-collapese: collapse; 
+    margin-top: 20px;
+}
+th, td{
+    border: 1px solid #ddd;
+    padding: 10px:
+    text-align:center;
+}
+th{
+    background-color: #4CAF50;
+    color: white;
+}
+td{
+    word-break: break-word;
 }

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transactions</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Transactions</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Amount</th>
+                    <th>Category</th>
+                    <th>Type</th>
+                    <th>Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="transactionTableBody"></tbody>
+        </table>
+        <form id = "transactionForm">
+            <input type="text" id = "title" placeholder="Title" required>
+            <input type="number" id = "amount" placeholder="Amount" required>
+            <select id = "category" required>
+                <option value="Food">Food</option>
+                <option value="Traval">Travel</option>
+                <option value="Bills">Bills</option>
+                <option value="Other">Other</option>
+            </select>
+            <select id = "type" required>
+                <option value="income">Income</option>
+                <option value="expense">Expense</option>
+            </select>
+            <input type = "date" id = "date" required>
+            <button type = "submit">Add transaction</button>
+        </form>
+        <br>
+        <a href = "dashboard.html">Back to Dashboard</a>
+    </div>
+    <script src="js/transactions.js"></script>
+</body>
+</html>
