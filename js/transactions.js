@@ -1,3 +1,5 @@
+
+let editTransactionId = null;
 const transactionForm = document.getElementById('transactionForm');
 const transactionTableBody = document.getElementById('transactionTableBody');
 
@@ -27,13 +29,21 @@ async function loadTransactions(){
              data.forEach(transaction => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td>₹${transaction.title}</td>
+                    <td>${transaction.title}</td>
                     <td>₹${transaction.amount}</td>
-                    <td>₹${transaction.category}</td>
-                    <td>₹${transaction.type}</td>
-                    <td>₹${transaction.date}</td>
+                    <td>${transaction.category}</td>
+                    <td>${transaction.type}</td>
+                    <td>${transaction.date}</td>
                     <td>
-                        <button onclick= "deletetransaction(${transaction.id})">Delete</button>
+                        <button onclick= "editTransaction(
+                            ${transaction.id},
+                            '${transaction.title}',
+                            ${transaction.amount},
+                            '${transaction.category}',
+                            '${transaction.type}',
+                            '${transaction.date}')"
+                            >Edit</button>
+                            <button onclick="deletetransaction(${transaction.id})">Delete</button>
                     </td>
                 `;
                 transactionTableBody.appendChild(row);
@@ -50,6 +60,75 @@ async function loadTransactions(){
     }
 }
 loadTransactions();
+// apply filters //
+async function applyFilters() {
+    const token = localStorage.getItem("access");
+    let url = "http://127.0.0.1:8000/api/transactions/";
+    const category = document.getElementById("filterCategory").value;
+    const type = document.getElementById("filterType").value;
+    const startDate = document.getElementById("startDate").value;
+    const endDate = document.getElementById("endDate").value;
+    const queryParams = new URLSearchParams();
+    if(category){
+        queryParams.append(
+            "category",category
+        );
+    }
+    if(type){
+        queryParams.append(
+            "type",type
+        );
+    }
+    if(startDate){
+        queryParams.append(
+            "start_date",startDate
+        );
+    }
+    if(endDate){
+        queryParams.append(
+            "end_date",endDate
+        );
+    }
+    url += `?${queryParams.toString()}`;
+    try {
+        const response = await fetch(
+            url,
+            {
+                method: 'GET',
+                headers:{
+                    "Authorization": `Bearer ${token}`
+                }
+
+            }
+        );
+        const data = await response.json();
+        if(response.ok){
+            transactionTableBody.innerHTML = "";
+            data.forEach(transaction => {
+                const row = document.createElement("tr");
+            row.innerHTML= `
+                <td>${transaction.title}</td>
+                <td>₹${transaction.amount}</td>
+                <td>${transaction.category}</td>
+                <td>${transaction.type}</td>
+                <td>${transaction.date}</td>
+                <td> 
+                    <button onclick="editTransaction(${transaction.id},
+                                    '${transaction.title}',
+                                    ${transaction.amount},
+                                    '${transaction.category}',
+                                    '${transaction.type}',
+                                    '${transaction.date}')">Edit</button>
+                    <button onclick="deleteTransaction(${transaction.id})">Delete</button>
+                </td>`;
+                transactionTableBody.appendChild(row);
+            });
+        }
+    }
+    catch(error){
+        console.log(error);
+    }
+}
 transactionForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const token = localStorage.getItem('access');
@@ -62,10 +141,16 @@ transactionForm.addEventListener('submit', async (e) => {
 
     };
     try {
+        let url = 'http://127.0.0.1:8000/api/transactions/';
+        let method = 'POST';
+        if(editTransactionId){
+            url = `http://127.0.0.1:8000/api/transactions/${editTransactionId}/`;
+            method = 'PATCH';
+        }
         const response = await fetch(
-            'http://127.0.0.1:8000/api/transactions/',
+            url,
             {
-                method: 'POST',
+                method: method,
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
@@ -75,6 +160,7 @@ transactionForm.addEventListener('submit', async (e) => {
         );
         if(response.ok){
             transactionForm.reset();
+            editTransactionId = null;
             loadTransactions();
         }
         else {
@@ -88,7 +174,7 @@ transactionForm.addEventListener('submit', async (e) => {
     }
 });
 // delete transaction//
-async function deletetransaction(id){
+async function deleteTransaction(id){
     const token = localStorage.getItem("access");
 
     const confirmDelete = confirm("Are you sure");
@@ -115,4 +201,18 @@ async function deletetransaction(id){
     catch(error){
         console.log(error)
     }
+}
+// edit transaction //
+function editTransaction(id,title,amount,category,type,date){
+    editTransactionId = id;
+    document.getElementById('title').value = title;
+    document.getElementById('amount').value = amount;
+    document.getElementById('category').value = category;
+    document.getElementById('type').value = type;
+    document.getElementById('date').value = date;
+}
+// logout func // 
+function logout(){
+    localStorage.clear();
+    window.location.href = 'index.html';
 }

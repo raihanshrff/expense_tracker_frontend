@@ -7,26 +7,37 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Dashboard</h1>
-        <div class="summary-card">
-            <h3>Total Income</h3>
-            <p id="income">₹0</p>
+    <div class="dashboard-layout">
+        <div class="container">
+            <h1>Dashboard</h1>
+            <p id ="loading">Loading...</p>
+            <div class="cards-grid">
+                <div class="summary-card">
+                    <h3>Total Income</h3>
+                    <p id="income">₹0</p>
+                </div>
+                <div class="summary-card">
+                    <h3>Total Expenses</h3>
+                    <p id="expense">₹0</p>
+                </div>
+                <div class="summary-card">
+                    <h3>Balance</h3>
+                    <p id="balance">₹0</p>
+                </div>
+            </div>
+            <h2>Category Breakdown</h2>
+            <ul id="categoryList"></ul>
+            <br>
+            <a href="transactions.html">Go to Transactions</a>
+            <br><br>
+            <button onclick="logout()">Logout</button>
         </div>
-        <div class="summary-card">
-            <h3>Total Expenses</h3>
-            <p id="expense">₹0</p>
+        <div class="chart-container">
+            <h2>Expense Chart</h2>
+            <canvas id="expenseChart"></canvas>
         </div>
-        <div class="summary-card">
-            <h3>Balance</h3>
-            <p id="balance">₹0</p>
-        </div>
-        <h2>Category Breakdown</h2>
-        <ul id="categoryList"></ul>
-        <br>
-        <a href="transactions.html">Go to Transactions</a>
-
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="js/dashboard.js"></script>
     
 </body>
