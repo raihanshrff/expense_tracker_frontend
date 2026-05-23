@@ -15,7 +15,7 @@ async function loadDashboard() {
     }
     try {
         const response = await fetch(
-            'http://127.0.0.1:8000/api/summary/',
+            'https://raihanshrff.pythonanywhere.com/api/summary/',
             {
                 method: 'GET',
                 headers: {

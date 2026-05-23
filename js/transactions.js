@@ -13,7 +13,7 @@ async function loadTransactions(){
 
     try {
         const response = await fetch(
-            'http://127.0.0.1:8000/api/transactions/',
+            'https://raihanshrff.pythonanywhere.com/api/transactions/',
             {
                 method: 'GET',
                 headers: {
@@ -43,7 +43,7 @@ async function loadTransactions(){
                             '${transaction.type}',
                             '${transaction.date}')"
                             >Edit</button>
-                            <button onclick="deletetransaction(${transaction.id})">Delete</button>
+                            <button onclick="deleteTransaction(${transaction.id})">Delete</button>
                     </td>
                 `;
                 transactionTableBody.appendChild(row);
@@ -63,7 +63,7 @@ loadTransactions();
 // apply filters //
 async function applyFilters() {
     const token = localStorage.getItem("access");
-    let url = "http://127.0.0.1:8000/api/transactions/";
+    let url = "https://raihanshrff.pythonanywhere.com/api/transactions/";
     const category = document.getElementById("filterCategory").value;
     const type = document.getElementById("filterType").value;
     const startDate = document.getElementById("startDate").value;
@@ -141,10 +141,10 @@ transactionForm.addEventListener('submit', async (e) => {
 
     };
     try {
-        let url = 'http://127.0.0.1:8000/api/transactions/';
+        let url = 'https://raihanshrff.pythonanywhere.com/api/transactions/';
         let method = 'POST';
         if(editTransactionId){
-            url = `http://127.0.0.1:8000/api/transactions/${editTransactionId}/`;
+            url = `https://raihanshrff.pythonanywhere.com/api/transactions/${editTransactionId}/`;
             method = 'PATCH';
         }
         const response = await fetch(
@@ -183,7 +183,7 @@ async function deleteTransaction(id){
     }
     try {
         const response = await fetch(
-            `http://127.0.0.1:8000/api/transactions/${id}/`,
+            `https://raihanshrff.pythonanywhere.com/api/transactions/${id}/`,
             {
                 method: 'DELETE',
                 headers: {
